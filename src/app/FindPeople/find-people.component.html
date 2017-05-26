@@ -1,0 +1,26 @@
+<div class="container">
+	<barre-header></barre-header>
+	
+	<div class="row">
+		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
+			<input class="col-xs-10 col-sm-10 col-md-10 col-lg-10" type="text" [(ngModel)]="keyWord" placeholder="Search Star Wars characters...">
+			<button class="col-xs-1 col-sm-1 col-md-1 col-lg-1" (click)="rechercher()"><i class="fa fa-search" aria-hidden="true"></i></button>
+			<button class="col-xs-1 col-sm-1 col-md-1 col-lg-1" (click)="rechercherTous()"><i class="fa fa-users" aria-hidden="true"></i></button>
+			<error *ngIf="error" [text]="errorText"></error>
+		</div>
+	</div>
+
+
+	<div class="container" *ngIf="this.dataService.titreRecherche != '' || searchOk">
+		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2 text-center">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center" *ngFor="let item of listPeople">
+				<h2>{{item.name}}</h2>
+				<strong>Gender:</strong> {{item.gender}}<br/>
+				<strong>Birth Year:</strong> {{item.birth_year}}<br/>
+				<a routerLink="/details/{{item.url.substr(27)}}">Details</a><br/><br/>
+			</div>
+			<span *ngIf="listPeople.length === 0 && searchOk">Nothing found</span>
+			<br/><pagination class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 text-center" [page]="pageCourante" [total]="pages" (pageChanged)="changerPage($event)"></pagination>
+		</div>
+	</div>
+</div>
